@@ -1,0 +1,62 @@
+<project name="november">
+
+    <property file="build.properties"/>
+
+    <path id="tomcat.libs.path">
+        <fileset dir="${CATALINA_HOME}/lib"/>
+        <fileset dir="${CATALINA_HOME}/bin"/>
+    </path>
+
+    <taskdef name="deploy" classname="org.apache.catalina.ant.DeployTask" classpathref="tomcat.libs.path"/>
+    <taskdef name="undeploy" classname="org.apache.catalina.ant.UndeployTask" classpathref="tomcat.libs.path"/>
+    <taskdef name="reload" classname="org.apache.catalina.ant.ReloadTask" classpathref="tomcat.libs.path"/>
+
+
+    <target name="clean">
+        <delete dir="target"/>
+    </target>
+
+    <target name="build">
+
+        <echo message="CATALINA_HOME: ${CATALINA_HOME}"/>
+
+        <mkdir dir="target/classes"/>
+
+        <javac srcdir="src" destdir="target/classes">
+            <classpath>
+                <fileset dir="${CATALINA_HOME}/lib"/>
+            </classpath>
+        </javac>
+
+        <war destfile="target/november.war" webxml="webapp/WEB-INF/web.xml">
+            <fileset dir="webapp"/>
+            <classes dir="target/classes"/>
+        </war>
+
+    </target>
+
+    <target name="deploy" depends="build">
+        <deploy url="${TOMCAT_MANAGER_URL}" username="${TOMCAT_MANAGER_USERNAME}"
+                password="${TOMCAT_MANAGER_PASSWORD}"
+                path="/november" war="file:target/november.war"/>
+
+    </target>
+
+    <target name="undeploy">
+        <undeploy url="${TOMCAT_MANAGER_URL}" username="${TOMCAT_MANAGER_USERNAME}"
+                  password="${TOMCAT_MANAGER_PASSWORD}"
+                  path="/november"/>
+    </target>
+
+    <!--
+
+  <target name="reload" description="Reload web application"
+          depends="compile">
+    <reload  url="${url}" username="${username}" password="${password}"
+            path="${path}"/>
+  </target>
+
+
+    -->
+
+</project>
