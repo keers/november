@@ -48,15 +48,5 @@
                   path="/november"/>
     </target>
 
-    <!--
-
-  <target name="reload" description="Reload web application"
-          depends="compile">
-    <reload  url="${url}" username="${username}" password="${password}"
-            path="${path}"/>
-  </target>
-
-
-    -->
-
+    <target name="all" depends="build, undeploy, deploy" />
 </project>

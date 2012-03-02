@@ -1,1 +1,3 @@
-Hello there!
+<%
+    response.sendRedirect("/november/hello");
+%>
