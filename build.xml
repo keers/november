@@ -18,7 +18,7 @@
 
     <target name="build">
 
-        <echo message="CATALINA_HOME: ${CATALINA_HOME}"/>
+        <echo message="Using CATALINA_HOME=${CATALINA_HOME}"/>
 
         <mkdir dir="target/classes"/>
 
