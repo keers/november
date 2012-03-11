@@ -30,7 +30,7 @@ public class ListItemsServlet extends HttpServlet {
 
 
         request.setAttribute("items", items);
-        RequestDispatcher rd = request.getRequestDispatcher("/jsp/items.jsp");
+        RequestDispatcher rd = request.getRequestDispatcher("/items.jsp");
 
         try {
             rd.forward(request, response);

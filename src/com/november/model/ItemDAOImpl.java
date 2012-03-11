@@ -1,5 +1,8 @@
 package com.november.model;
 
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,14 +29,17 @@ public class ItemDAOImpl implements ItemDAO {
     @Override
     public List<Item> getItems() {
         List<Item> items = new ArrayList<Item>();
-
         Connection connection = null;
         ResultSet resultSet = null;
         Statement statement = null;
 
         try {
-            Class.forName("org.sqlite.JDBC");
-            connection = DriverManager.getConnection("jdbc:sqlite:/Users/sergeikirsanov/Documents/projects/november/november.sqlite");
+            Context initCtx = new InitialContext();
+            Context envCtx = (Context) initCtx.lookup("java:comp/env");
+            DataSource ds = (DataSource) envCtx.lookup("jdbc/NovemberDB");
+
+
+            connection = ds.getConnection();
             statement = connection.createStatement();
 
             resultSet = statement
